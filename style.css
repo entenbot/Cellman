@@ -1,20 +1,12 @@
 canvas {
     border: 1px solid black;
-    
-
 }
 body {
-    
-   
-    
-    
+    margin: 0;
     font-family: monospace;
     font-size: 120%;
-    
-
     background-color: rgb(66, 53, 34);
 }
-
 div {
     background-color: rgb(252, 224, 190);
 }
