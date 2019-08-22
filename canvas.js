@@ -107,7 +107,6 @@ function drawBoard(){
 
 
 
-}
 
 
 
@@ -133,8 +132,6 @@ var stone = {};
 ctx.canvas.addEventListener('click', function(event) {
     var mouseX = event.clientX - ctx.canvas.offsetLeft;
     var mouseY = event.clientY - ctx.canvas.offsetTop;
-    document.querySelector('output').innerHTML = coordinates(mouseX) + '|' +coordinates(mouseY);
-    
     
     document.querySelector('output').innerHTML = coordinates(mouseX) + '|' +coordinates(mouseY);
     
