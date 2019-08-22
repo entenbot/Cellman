@@ -1,0 +1,14 @@
+canvas {
+    border: 1px solid black;
+}
+body {
+    font-family: monospace;
+    font-size: 120%;
+    margin: 5;
+
+    background-color: rgb(66, 53, 34);
+}
+
+div {
+    background-color: bisque;
+}
