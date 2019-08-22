@@ -1,11 +1,6 @@
 canvas {
     border: 1px solid black;
-    user-drag: none; 
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+    
 
 }
 body {
@@ -21,5 +16,5 @@ body {
 }
 
 div {
-    background-color: bisque;
+    background-color: rgb(252, 224, 190);
 }
