@@ -1,10 +1,21 @@
 canvas {
     border: 1px solid black;
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+
 }
 body {
+    
+   
+    
+    
     font-family: monospace;
     font-size: 120%;
-    margin: 5;
+    
 
     background-color: rgb(66, 53, 34);
 }
