@@ -69,6 +69,24 @@ function drawField(){
 }
 }
 
+function randomRgb(){
+    let r = Math.floor(Math.random()*41);
+    let g = Math.floor(Math.random()*20);
+    let b = Math.floor(Math.random()*31);
+    return 'rgba('+r+', '+g+', '+b+')';     
+
+
+};
+
+
+function showBoard(){
+    
+    console.log(gameBoard);
+    document.querySelector("#board").innerHTML = gameBoard;
+
+
+}
+
 
 
 
@@ -83,7 +101,8 @@ canvas.height = window.innerHeight- (window.innerHeight*.20);
 ctx = canvas.getContext('2d');
 
 
-
+var gameBoard = [];
+var stone = []
 
 
 
@@ -95,14 +114,23 @@ ctx.canvas.addEventListener('click', function(event) {
     document.querySelector('output').innerHTML = coordinates(mouseX) + '|' +coordinates(mouseY);
     
     
+    
+    ctx.fillStyle = randomRgb();
     ctx.fillRect(toField(coordinates(mouseX)),toField(coordinates(mouseY)),cellSize,cellSize);
-       
-    ctx.stroke();
+
+    stone = {x: coordinates(mouseX),y: coordinates(mouseY),l: 1};
+    gameBoard.push(stone);
+
+    
 })
 
 canvas.width = cellSize*maxRows(cellSize);
 canvas.height = cellSize*maxCollumns(cellSize);
+
+
+
 drawField();
+
 
 
 
