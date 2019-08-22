@@ -4,17 +4,17 @@ function coordinates(mousePosition){
     if (mousePosition < cellSize){
         return 0;
     };
-    let position = 1
+    let position = 1;
     while (mousePosition > cellSize*position){
         position+=1;
     };
-    return position;
+    return position-1;
 };
 
 
 //translates position coordinates from cordinates to canvas position
 function toField (pos){    
-    pos = pos*cellSize;
+    pos = (pos+1)*cellSize;
     if (pos == 0){
         return 0;
     } else {
@@ -74,15 +74,37 @@ function randomRgb(){
     let g = Math.floor(Math.random()*20);
     let b = Math.floor(Math.random()*31);
     return 'rgba('+r+', '+g+', '+b+')';     
+};
 
-
+function randomRgbReddish(){
+    let r = Math.floor(Math.random()*181);
+    let g = Math.floor(Math.random()*20);
+    let b = Math.floor(Math.random()*31);
+    return 'rgba('+r+', '+g+', '+b+')';     
 };
 
 
-function showBoard(){
+
+
+
+
+function drawBoard(){
+    gameBoard.forEach(element => {
+        
+        
+        
+        
+        ctx.fillStyle = randomRgbReddish();
+        ctx.fillRect(toField(element.x),toField(element.y),cellSize,cellSize);
     
-    console.log(gameBoard);
-    document.querySelector("#board").innerHTML = gameBoard;
+    });
+};
+
+
+
+
+
+
 
 
 }
@@ -100,9 +122,9 @@ canvas.height = window.innerHeight- (window.innerHeight*.20);
 
 ctx = canvas.getContext('2d');
 
-
+var animationSpeed = 10;
 var gameBoard = [];
-var stone = []
+var stone = {};
 
 
 
@@ -114,15 +136,76 @@ ctx.canvas.addEventListener('click', function(event) {
     document.querySelector('output').innerHTML = coordinates(mouseX) + '|' +coordinates(mouseY);
     
     
+    document.querySelector('output').innerHTML = coordinates(mouseX) + '|' +coordinates(mouseY);
     
     ctx.fillStyle = randomRgb();
     ctx.fillRect(toField(coordinates(mouseX)),toField(coordinates(mouseY)),cellSize,cellSize);
 
     stone = {x: coordinates(mouseX),y: coordinates(mouseY),l: 1};
-    gameBoard.push(stone);
+    
+    
+    //need to check if stone object is allready clicked and in the gameboard list
+    
+    let wasDeleted = false;
+    console.clear();
+    
+    
+    gameBoard.forEach(element => {
+        if (element.x == stone.x && element.y == stone.y){
+            console.log('exists');
+            
+            
+            ctx.fillStyle='rgb(252, 224, 190)'
+            ctx.fillRect(toField(element.x),toField(element.y),cellSize,cellSize);
+            ctx.rect(toField(element.x),toField(element.y),cellSize,cellSize);
+            ctx.stroke();
+
+            
+            wasDeleted = true;
+        } 
+    });
 
     
+    function isUnique(object){
+        if (object.x == stone.x && object.y == stone.y){
+            return false;
+        } else { 
+            return true;
+        }
+    }
+    
+    const results = gameBoard.filter(isUnique);
+    gameBoard = results;
+
+    
+    if (wasDeleted == false){
+    gameBoard.push(stone);
+};
+    gameBoard.forEach(element => {
+    console.log(element);
+    
 })
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+})
+    
+
+
+
+
+
+
+
+
+
 
 canvas.width = cellSize*maxRows(cellSize);
 canvas.height = cellSize*maxCollumns(cellSize);
@@ -130,6 +213,16 @@ canvas.height = cellSize*maxCollumns(cellSize);
 
 
 drawField();
+
+
+
+function loop(){
+  drawBoard();
+}
+setInterval(loop,200);
+
+
+
 
 
 
