@@ -58,26 +58,18 @@ function clears(){
     drawField();
 };
 
-
-
-
-
 //draws field
 function drawField(){ 
-    let maxC = maxCollumns(cellSize);
-    let maxR = maxRows(cellSize);
     let row = 0;
     let collumn = 0;
     for (i= 0; i < maxC; i++){
         row = 0;
         for (b = 0; b< maxR; b++){
             ctx.rect(row,collumn,cellSize,cellSize);
-            
             row += cellSize;
         } 
         collumn += cellSize;
     ctx.stroke();
-
 }}
 
 function randomRgb(){
@@ -116,7 +108,6 @@ function loop()
     drawBoard();
     
 };
-setInterval(loop,200);
 
 function showNeighbors(){
     gameBoard.forEach(element => {
@@ -135,48 +126,29 @@ function showNeighbors(){
     drawField();
 }
 
-
 function start(){
+    canvas = document.querySelector('canvas');
+    ctx = canvas.getContext('2d');
     cellSize = parseInt(document.getElementById('inputCellSize').value);
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight- (window.innerHeight*.20);
     canvas.width = cellSize*maxRows(cellSize);
     canvas.height = cellSize*maxCollumns(cellSize);
     gameBoard = [];
+    maxC = maxCollumns(cellSize);
+    maxR = maxRows(cellSize);
     drawField();
+    setInterval(loop,200); 
 }
 
-
-
-
-
-
-
-
-
-//getting input from webpage and setting up the canvas element. 
-
-var cellSize = parseInt(document.getElementById('inputCellSize').value);
-var canvas = document.querySelector('canvas');
-ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight- (window.innerHeight*.20);
-canvas.width = cellSize*maxRows(cellSize);
-canvas.height = cellSize*maxCollumns(cellSize);
-
 start()
-
-var gameBoard = [];
-var stone = {};
 
 //adds clicked fields to map
 ctx.canvas.addEventListener('click', function(event) {
     var mouseX = event.clientX - ctx.canvas.offsetLeft;
     var mouseY = event.clientY - ctx.canvas.offsetTop;
     document.querySelector('output').innerHTML = coordinates(mouseX) + '|' +coordinates(mouseY);
-    //ctx.fillStyle = randomRgb();
-    //ctx.fillRect(toField(coordinates(mouseX)),toField(coordinates(mouseY)),cellSize,cellSize);
+    
     stone = {x: coordinates(mouseX),y: coordinates(mouseY),l: 1};
     
     //need to check if stone object is allready clicked and in the gameboard list
