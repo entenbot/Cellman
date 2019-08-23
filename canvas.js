@@ -58,6 +58,10 @@ function clears(){
     drawField();
 };
 
+
+
+
+
 //draws field
 function drawField(){ 
     let maxC = maxCollumns(cellSize);
@@ -68,10 +72,12 @@ function drawField(){
         row = 0;
         for (b = 0; b< maxR; b++){
             ctx.rect(row,collumn,cellSize,cellSize);
-            ctx.stroke();
+            
             row += cellSize;
         } 
         collumn += cellSize;
+    ctx.stroke();
+
 }}
 
 function randomRgb(){
@@ -112,6 +118,42 @@ function loop()
 };
 setInterval(loop,200);
 
+function showNeighbors(){
+    gameBoard.forEach(element => {
+        
+        ///needs check if stone is at the border of the board
+
+        ctx.fillRect(toField(element.x-1),toField(element.y+1),cellSize,cellSize);
+        ctx.fillRect(toField(element.x-1),toField(element.y),cellSize,cellSize);
+        ctx.fillRect(toField(element.x-1),toField(element.y-1),cellSize,cellSize);
+        ctx.fillRect(toField(element.x),toField(element.y+1),cellSize,cellSize);
+        ctx.fillRect(toField(element.x),toField(element.y-1),cellSize,cellSize);
+        ctx.fillRect(toField(element.x+1),toField(element.y+1),cellSize,cellSize);
+        ctx.fillRect(toField(element.x+1),toField(element.y),cellSize,cellSize);
+        ctx.fillRect(toField(element.x+1),toField(element.y-1),cellSize,cellSize);
+        })
+    drawField();
+}
+
+
+function start(){
+    cellSize = parseInt(document.getElementById('inputCellSize').value);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight- (window.innerHeight*.20);
+    canvas.width = cellSize*maxRows(cellSize);
+    canvas.height = cellSize*maxCollumns(cellSize);
+    gameBoard = [];
+    drawField();
+}
+
+
+
+
+
+
+
+
+
 //getting input from webpage and setting up the canvas element. 
 
 var cellSize = parseInt(document.getElementById('inputCellSize').value);
@@ -123,7 +165,7 @@ canvas.height = window.innerHeight- (window.innerHeight*.20);
 canvas.width = cellSize*maxRows(cellSize);
 canvas.height = cellSize*maxCollumns(cellSize);
 
-drawField();
+start()
 
 var gameBoard = [];
 var stone = {};
