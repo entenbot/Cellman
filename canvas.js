@@ -1,4 +1,3 @@
-
 //CELLMAN
 
 //gets postion coordinate from mouse (wich row/collumn was clicked)
@@ -46,19 +45,16 @@ function maxCollumns(cellSize){
      return maxGrid -=1;
 };
 
-//clears canvas
-function cls(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height); 
-};
-
-///clears field
+///clears field and canvas
 function clears(){
+    console.clear()
     gameBoard = [];
-    cls();
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
     drawField();
 };
 
 //draws field
+//i should probably draw my field with lines not with rectangles...
 function drawField(){ 
     let row = 0;
     let collumn = 0;
@@ -87,8 +83,35 @@ function randomRgbReddish(){
 };
 
 function drawBoard(){
+    getNeighbors()
     gameBoard.forEach(element => {
-        ctx.fillStyle = randomRgbReddish();
+        if (JSON.stringify(element.l) == 0){
+            ctx.fillStyle = n0;
+        };
+        if (JSON.stringify(element.l) == 1){
+            ctx.fillStyle = n1;        
+        };
+        if (JSON.stringify(element.l) == 2){
+            ctx.fillStyle = n2;        
+        };
+        if (JSON.stringify(element.l) == 3){
+            ctx.fillStyle = n3; 
+        };
+        if (JSON.stringify(element.l) == 4){
+            ctx.fillStyle = n4;  
+        };
+        if (JSON.stringify(element.l) == 5){
+            ctx.fillStyle = n5;  
+        };
+        if (JSON.stringify(element.l) == 6){
+            ctx.fillStyle = n6;  
+        };
+        if (JSON.stringify(element.l) == 7){
+            ctx.fillStyle = n7; 
+        };
+        if (JSON.stringify(element.l) == 8){
+            ctx.fillStyle = n8;
+        };
         ctx.fillRect(toField(element.x),toField(element.y),cellSize,cellSize);
     });
 };
@@ -106,14 +129,10 @@ function isUnique(object){
 function loop()
 {
     drawBoard();
-    
 };
 
 function showNeighbors(){
     gameBoard.forEach(element => {
-        
-        ///needs check if stone is at the border of the board
-
         ctx.fillRect(toField(element.x-1),toField(element.y+1),cellSize,cellSize);
         ctx.fillRect(toField(element.x-1),toField(element.y),cellSize,cellSize);
         ctx.fillRect(toField(element.x-1),toField(element.y-1),cellSize,cellSize);
@@ -125,6 +144,37 @@ function showNeighbors(){
         })
     drawField();
 }
+
+function getNeighbors(){
+    console.clear();
+    let neighbors = 0;
+    let potNeighborList = []
+    let stoneList = []
+    gameBoard.forEach(element => {
+        stoneList.push({x: element.x,y: element.y})
+    });
+    gameBoard.forEach(element => {
+        potNeighborList.push({x: element.x-1,y: element.y+1});
+        potNeighborList.push({x: element.x-1,y: element.y});
+        potNeighborList.push({x: element.x-1,y: element.y-1});
+        potNeighborList.push({x: element.x,y: element.y+1});
+        potNeighborList.push({x: element.x,y: element.y-1});
+        potNeighborList.push({x: element.x+1,y: element.y+1});
+        potNeighborList.push({x: element.x+1,y: element.y-1});
+        potNeighborList.push({x: element.x+1,y: element.y});
+
+        for (n = 0; n < potNeighborList.length; n++){
+            for (b = 0; b < stoneList.length; b++){
+                if (JSON.stringify(potNeighborList[n]) == JSON.stringify(stoneList[b])){
+                    neighbors += 1;
+                }
+            }
+        }
+        element.l = neighbors;
+        potNeighborList = []
+        neighbors = 0;
+    });
+};
 
 function start(){
     canvas = document.querySelector('canvas');
@@ -139,6 +189,16 @@ function start(){
     maxR = maxRows(cellSize);
     drawField();
     setInterval(loop,200); 
+    
+    n8 = "rgba(255, 0, 0)";
+    n7 = "rgba(220, 0, 0)";
+    n6 = "rgba(180, 0, 0)";
+    n5 = "rgba(140, 0, 0)";
+    n4 = "rgba(123, 0, 0)";
+    n3 = "rgba(90, 0, 0)";
+    n2 = "rgba(70, 0, 0)";
+    n1 = "rgba(50, 0, 0)";
+    n0 = "rgba(0, 0, 0)";
 }
 
 start()
@@ -150,8 +210,6 @@ ctx.canvas.addEventListener('click', function(event) {
     document.querySelector('output').innerHTML = coordinates(mouseX) + '|' +coordinates(mouseY);
     
     stone = {x: coordinates(mouseX),y: coordinates(mouseY),l: 1};
-    
-    //need to check if stone object is allready clicked and in the gameboard list
     
     let wasDeleted = false;
     gameBoard.forEach(element => {
@@ -167,9 +225,28 @@ ctx.canvas.addEventListener('click', function(event) {
     if (wasDeleted == false){
         gameBoard.push(stone);
     };
-    gameBoard.forEach(element => {
-        console.log(element);
-    })
 })
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///export and import board list.
+
+
 
